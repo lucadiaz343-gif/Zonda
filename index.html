@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zonda</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0a0a0a; color: #f0f0f0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        nav { position: fixed; top: 0; width: 100%; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); }
+        .logo { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+        nav a { color: #888; text-decoration: none; font-size: 14px; margin-left: 32px; transition: color 0.3s; }
+        nav a:hover { color: #f0f0f0; }
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 48px; border-bottom: 1px solid #222; }
+        .hero h1 { font-size: clamp(48px, 8vw, 120px); font-weight: 700; line-height: 1; letter-spacing: -2px; max-width: 900px; }
+        .hero p { font-size: 18px; color: #888; margin-top: 32px; max-width: 500px; line-height: 1.6; }
+        .hero-cta { margin-top: 48px; display: inline-block; padding: 16px 36px; border: 1px solid #f0f0f0; color: #f0f0f0; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; width: fit-content; }
+        .hero-cta:hover { background: #f0f0f0; color: #0a0a0a; }
+        .servicios { padding: 120px 48px; border-bottom: 1px solid #222; }
+        .servicios-header { margin-bottom: 80px; }
+        .label { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #888; }
+        .servicios-header h2 { font-size: clamp(36px, 5vw, 72px); font-weight: 700; letter-spacing: -1px; margin-top: 16px; line-height: 1.1; }
+        .servicios-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: #222; }
+        .servicio-card { background: #0a0a0a; padding: 48px; transition: background 0.3s; }
+        .servicio-card:hover { background: #111; }
+        .num { font-size: 12px; color: #444; letter-spacing: 2px; }
+        .servicio-card h3 { font-size: 22px; font-weight: 600; margin: 16px 0 12px; }
+        .servicio-card p { font-size: 15px; color: #888; line-height: 1.6; }
+        .portfolio { padding: 120px 48px; border-bottom: 1px solid #222; }
+        .portfolio-header { margin-bottom: 64px; }
+        .portfolio-header h2 { font-size: clamp(36px, 5vw, 72px); font-weight: 700; letter-spacing: -1px; margin-top: 16px; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: #222; }
+        .proyecto { position: relative; overflow: hidden; cursor: pointer; }
+        .proyecto-img { width: 100%; height: 400px; transition: transform 0.6s ease; }
+        .proyecto:hover .proyecto-img { transform: scale(1.03); }
+        .proyecto-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); transform: translateY(20px); opacity: 0; transition: all 0.4s ease; }
+        .proyecto:hover .proyecto-overlay { transform: translateY(0); opacity: 1; }
+        .proyecto-cat { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #888; }
+        .proyecto-overlay h3 { font-size: 24px; font-weight: 600; margin-top: 8px; }
+        .contacto { padding: 160px 48px; border-bottom: 1px solid #222; display: flex; flex-direction: column; gap: 24px; }
+        .contacto h2 { font-size: clamp(36px, 5vw, 80px); font-weight: 700; letter-spacing: -1px; line-height: 1.1; max-width: 700px; }
+        .contacto p { font-size: 18px; color: #888; line-height: 1.6; }
+        footer { padding: 48px; }
+        .footer-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 32px; border-bottom: 1px solid #222; }
+        .footer-links a { color: #888; text-decoration: none; font-size: 14px; margin-left: 32px; transition: color 0.3s; }
+        .footer-links a:hover { color: #f0f0f0; }
+        .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; font-size: 13px; color: #444; }
+        .animar { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .animar.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ZONDA</div>
+        <div>
+            <a href="#">Servicios</a>
+            <a href="#">Trabajo</a>
+            <a href="#">Contacto</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="animar">Sensaciones a tus pantallas</h1>
+        <p class="animar">Diseño, creatividad y autenticidad para los que creen.</p>
+        <a href="#" class="hero-cta">Ver trabajo</a>
+    </section>
+
+    <section class="servicios">
+        <div class="servicios-header animar">
+            <span class="label">Lo que hacemos</span>
+            <h2>Servicio completo,<br>criterio propio</h2>
+        </div>
+        <div class="servicios-grid">
+            <div class="servicio-card animar">
+                <span class="num">01</span>
+                <h3>Identidad & Branding</h3>
+                <p>Naming, logo, sistema visual y manual de marca. Construimos la personalidad visual desde cero.</p>
+            </div>
+            <div class="servicio-card animar">
+                <span class="num">02</span>
+                <h3>Contenido Digital</h3>
+                <p>Estrategia, diseño y producción de contenido para redes. Calendario editorial, copy y piezas.</p>
+            </div>
+            <div class="servicio-card animar">
+                <span class="num">03</span>
+                <h3>Dirección de Arte</h3>
+                <p>Concepto visual y supervisión creativa para campañas, eventos y producciones.</p>
+            </div>
+            <div class="servicio-card animar">
+                <span class="num">04</span>
+                <h3>Diseño Editorial</h3>
+                <p>Menús, catálogos, presentaciones y piezas gráficas con criterio y atención al detalle.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio">
+        <div class="portfolio-header animar">
+            <span class="label">Trabajo seleccionado</span>
+            <h2>Proyectos</h2>
+        </div>
+        <div class="portfolio-grid">
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/1.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Identidad</span><h3>Petizo Madrid — Brand</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/2.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Ilustración</span><h3>Petizo Madrid</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/3.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Ilustración</span><h3>Espresso Martini</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/4.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Ilustración</span><h3>Tormenta</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/5.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Contenido digital</span><h3>Jueves de Sobremesa</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/6.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Identidad</span><h3>Petizo Madrid — Logo</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/7.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Identidad</span><h3>Petizo Madrid — Noche</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/8.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Contenido digital</span><h3>Sobremesa — Flamenco</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/9.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Ilustración</span><h3>Alma Negra</h3></div>
+            </div>
+            <div class="proyecto animar">
+                <div class="proyecto-img" style="background-image: url('img/portada.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="proyecto-overlay"><span class="proyecto-cat">Identidad</span><h3>Petizo Madrid — Portada</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacto">
+        <span class="label">¿Arrancamos?</span>
+        <h2 class="animar">Contanos tu proyecto</h2>
+        <p>Trabajamos con marcas de cualquier industria.<br>Si tenés una idea, nosotros la construimos.</p>
+        <a href="mailto:hola@zonda.com" class="hero-cta">Escribinos</a>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <div class="logo">ZONDA</div>
+            <div class="footer-links">
+                <a href="#">Servicios</a>
+                <a href="#">Trabajo</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Zonda. Todos los derechos reservados.</span>
+            <span>Mendoza · Dallas</span>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.animar').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
