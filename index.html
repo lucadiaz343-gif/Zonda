@@ -11,11 +11,12 @@
         .logo { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
         nav a { color: #888; text-decoration: none; font-size: 14px; margin-left: 32px; transition: color 0.3s; }
         nav a:hover { color: #f0f0f0; }
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 48px; border-bottom: 1px solid #222; }
-        .hero h1 { font-size: clamp(48px, 8vw, 120px); font-weight: 700; line-height: 1; letter-spacing: -2px; max-width: 900px; }
-        .hero p { font-size: 18px; color: #888; margin-top: 32px; max-width: 500px; line-height: 1.6; }
-        .hero-cta { margin-top: 48px; display: inline-block; padding: 16px 36px; border: 1px solid #f0f0f0; color: #f0f0f0; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; width: fit-content; }
+        .hero { position: relative; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 48px; border-bottom: 1px solid #222; overflow: hidden; }
+        .hero h1 { position: relative; z-index: 1; font-size: clamp(48px, 8vw, 120px); font-weight: 700; line-height: 1; letter-spacing: -2px; max-width: 900px; }
+        .hero p { position: relative; z-index: 1; font-size: 18px; color: #888; margin-top: 32px; max-width: 500px; line-height: 1.6; }
+        .hero-cta { position: relative; z-index: 1; margin-top: 48px; display: inline-block; padding: 16px 36px; border: 1px solid #f0f0f0; color: #f0f0f0; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; width: fit-content; }
         .hero-cta:hover { background: #f0f0f0; color: #0a0a0a; }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; z-index: 0; }
         .servicios { padding: 120px 48px; border-bottom: 1px solid #222; }
         .servicios-header { margin-bottom: 80px; }
         .label { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #888; }
@@ -47,6 +48,24 @@
         .footer-bottom { display: flex; justify-content: space-between; padding-top: 24px; font-size: 13px; color: #444; }
         .animar { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
         .animar.visible { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) {
+            nav { padding: 20px 24px; }
+            nav a { margin-left: 16px; font-size: 13px; }
+            .hero { padding: 0 24px; }
+            .hero h1 { font-size: clamp(36px, 10vw, 64px); letter-spacing: -1px; }
+            .hero p { font-size: 16px; margin-top: 20px; }
+            .hero-cta { margin-top: 32px; }
+            .servicios { padding: 80px 24px; }
+            .servicios-grid { grid-template-columns: 1fr; }
+            .servicio-card { padding: 32px 24px; }
+            .portfolio { padding: 80px 24px; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .proyecto-img { height: 300px; }
+            .contacto { padding: 100px 24px; }
+            .footer-top { flex-direction: column; align-items: flex-start; gap: 24px; }
+            .footer-links a { margin-left: 0; margin-right: 24px; }
+            .footer-bottom { flex-direction: column; gap: 8px; }
+        }
     </style>
 </head>
 <body>
@@ -61,6 +80,9 @@
     </nav>
 
     <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://drive.google.com/uc?export=download&id=1350n-jRsu2ijgEKsWTrAEIKuoddEPUkq" type="video/mp4">
+        </video>
         <h1 class="animar">Sensaciones a tus pantallas</h1>
         <p class="animar">Diseño, creatividad y autenticidad para los que creen.</p>
         <a href="#" class="hero-cta">Ver trabajo</a>
@@ -153,4 +175,29 @@
 
     <footer>
         <div class="footer-top">
-            <div class="logo">ZONDA</
+            <div class="logo">ZONDA</div>
+            <div class="footer-links">
+                <a href="#">Servicios</a>
+                <a href="#">Trabajo</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 Zonda. Todos los derechos reservados.</span>
+            <span>Mendoza · Dallas</span>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.animar').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
