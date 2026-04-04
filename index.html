@@ -14,6 +14,7 @@
             overflow-x: hidden;
         }
 
+        /* ── CURSOR (solo desktop) ── */
         #cursor, #cursor-ring, #cursor-label { display: none; }
         @media (pointer: fine) {
             body { cursor: none; }
@@ -41,6 +42,7 @@
             }
         }
 
+        /* ── PAGE TRANSITION ── */
         #page-transition {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -49,13 +51,79 @@
             pointer-events: none;
         }
 
-        /* Flash overlay para el efecto final */
+        /* ── FLASH ── */
         #flash {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: #ffffff;
+            background: #ffffff; pointer-events: none;
+            z-index: 7000; opacity: 0;
+        }
+
+        /* ══════════════════════════════════
+           HAMBURGER MENU MOBILE
+        ══════════════════════════════════ */
+
+        /* Botón hamburguesa — solo mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 32px; height: 32px;
+            cursor: pointer;
+            z-index: 9500;
+            position: relative;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%; height: 1px;
+            background: #f0f0f0;
+            transition: transform 0.4s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+        /* X cuando está abierto */
+        .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+        /* Overlay SVG de olas */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 9000;
             pointer-events: none;
-            z-index: 7000;
+            visibility: hidden;
+        }
+        .menu-overlay.active { pointer-events: all; visibility: visible;}
+
+        .shape-overlays {
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
+        }
+
+        /* Links del menú mobile */
+        .mobile-menu-links {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: flex-start;
+            padding: 0 40px;
+            z-index: 10;
+        }
+        .mobile-menu-links a {
+            font-size: clamp(36px, 10vw, 56px);
+            font-weight: 700; letter-spacing: -1px;
+            color: #f0f0f0; text-decoration: none;
+            line-height: 1.15;
+            opacity: 0; transform: translateY(30px);
+            display: block;
+            transition: color 0.3s;
+        }
+        .mobile-menu-links a:hover { color: #888; }
+        .mobile-menu-footer {
+            position: absolute; bottom: 48px; left: 40px;
+            font-size: 12px; letter-spacing: 3px;
+            text-transform: uppercase; color: #444;
             opacity: 0;
         }
 
@@ -64,7 +132,7 @@
             position: fixed; top: 0; width: 100%;
             padding: 24px 48px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 100;
+            z-index: 9400;
             background: rgba(10,10,10,0.8);
             backdrop-filter: blur(10px);
             opacity: 0;
@@ -74,17 +142,16 @@
             letter-spacing: 2px; text-transform: uppercase;
         }
 
-        /* Nav links con gap generoso — evita overlap al escalar */
+        /* Desktop links */
         .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 52px;          /* espacio suficiente para 1.5x sin tocarse */
+            display: flex; align-items: center;
+            gap: 80px;
         }
         .nav-link {
             color: #888; text-decoration: none;
-            font-size: 14px;
-            display: inline-block;
-            transform-origin: bottom center;
+            font-size: 14px; display: inline-block;
+            transform-origin: center;
+            will-change: transform;
             white-space: nowrap;
         }
 
@@ -137,7 +204,7 @@
         .pin-text {
             position: relative; z-index: 10;
             text-align: center; pointer-events: none;
-            margin-top: 120px; /* baja el texto para no tapar el logo */
+            margin-top: 120px;
         }
         .pin-label {
             font-size: 11px; letter-spacing: 4px;
@@ -147,8 +214,7 @@
         .pin-title {
             font-size: clamp(13px, 1.8vw, 18px);
             font-weight: 400; letter-spacing: 6px;
-            text-transform: uppercase; color: #333;
-            opacity: 0;
+            text-transform: uppercase; color: #333; opacity: 0;
         }
         .stat-overlay { position: absolute; z-index: 10; pointer-events: none; }
         .stat-overlay.top-left  { top: 48px; left: 48px; }
@@ -195,7 +261,7 @@
         .proyecto { position: relative; overflow: hidden; }
         .proyecto-img {
             width: 100%; height: 400px;
-            background-size: 115%; background-position: center;
+            background-size: 150%; background-position: center;
             transition: background-size 0.6s ease;
         }
         .proyecto:hover .proyecto-img { background-size: 120%; }
@@ -238,24 +304,30 @@
         /* ── MOBILE ── */
         @media (max-width: 768px) {
             nav { padding: 20px 24px; }
-            .nav-links { gap: 20px; }
-            .nav-link { font-size: 13px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
             .hero { padding: 0 24px; }
             .hero h1 { font-size: clamp(40px, 11vw, 72px); letter-spacing: -1px; }
             .hero p { font-size: 16px; margin-top: 20px; }
             .hero-cta { margin-top: 32px; padding: 14px 28px; }
+
             .servicios { padding: 80px 24px; }
             .servicios-header { margin-bottom: 48px; }
             .servicios-grid { grid-template-columns: 1fr; }
             .servicio-card { padding: 32px 24px; }
+
             .portfolio { padding: 80px 24px; }
             .portfolio-grid { grid-template-columns: 1fr; }
             .proyecto-img { height: 260px; }
             .proyecto-overlay { opacity: 1; transform: translateY(0); }
+
             .contacto { padding: 100px 24px; }
+
             .footer-top { flex-direction: column; align-items: flex-start; gap: 24px; }
             .footer-links a { margin-left: 0; margin-right: 24px; }
             .footer-bottom { flex-direction: column; gap: 8px; }
+
             .stat-overlay { display: none; }
             .pin-text { margin-top: 160px; }
         }
@@ -269,12 +341,41 @@
     <div id="page-transition"></div>
     <div id="flash"></div>
 
+    <!-- HAMBURGER MENU OVERLAY -->
+    <div class="menu-overlay" id="menu-overlay">
+        <svg class="shape-overlays" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#111111" />
+                    <stop offset="100%" stop-color="#0a0a0a" />
+                </linearGradient>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#1a1a1a" />
+                    <stop offset="100%" stop-color="#0d0d0d" />
+                </linearGradient>
+            </defs>
+            <path class="shape-overlays__path" fill="url(#grad2)"></path>
+            <path class="shape-overlays__path" fill="url(#grad1)"></path>
+        </svg>
+        <nav class="mobile-menu-links" id="mobile-menu-links">
+            <a href="#servicios" class="mobile-link">Servicios</a>
+            <a href="#portfolio" class="mobile-link">Trabajo</a>
+            <a href="#contacto" class="mobile-link">Contacto</a>
+            <div class="mobile-menu-footer" id="mobile-footer">Mendoza · Dallas — 2025</div>
+        </nav>
+    </div>
+
     <nav id="nav">
         <div class="logo">ZONDA</div>
         <div class="nav-links">
             <a href="#servicios" class="nav-link">Servicios</a>
             <a href="#portfolio" class="nav-link">Trabajo</a>
             <a href="#contacto" class="nav-link">Contacto</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     </nav>
 
@@ -289,7 +390,7 @@
         </div>
     </section>
 
-    <!-- SECCIÓN 3D PINNED -->
+    <!-- SECCIÓN 3D -->
     <section class="pin-container" id="pin-section">
         <canvas id="three-canvas"></canvas>
         <div class="stat-overlay top-left">
@@ -307,27 +408,27 @@
     </section>
 
     <section class="servicios" id="servicios">
-        <div class="servicios-header">
+        <div class="servicios-header" data-speed="0.95">
             <span class="label">Lo que hacemos</span>
             <h2>Servicio completo,<br>criterio propio</h2>
         </div>
         <div class="servicios-grid">
-            <div class="servicio-card">
+            <div class="servicio-card" data-speed="0.92">
                 <span class="num">01</span>
                 <h3>Identidad & Branding</h3>
                 <p>Naming, logo, sistema visual y manual de marca. Construimos la personalidad visual desde cero.</p>
             </div>
-            <div class="servicio-card">
+            <div class="servicio-card" data-speed="0.97">
                 <span class="num">02</span>
                 <h3>Contenido Digital</h3>
                 <p>Estrategia, diseño y producción de contenido para redes. Calendario editorial, copy y piezas.</p>
             </div>
-            <div class="servicio-card">
+            <div class="servicio-card" data-speed="0.93">
                 <span class="num">03</span>
                 <h3>Dirección de Arte</h3>
                 <p>Concepto visual y supervisión creativa para campañas, eventos y producciones.</p>
             </div>
-            <div class="servicio-card">
+            <div class="servicio-card" data-speed="0.96">
                 <span class="num">04</span>
                 <h3>Diseño Editorial</h3>
                 <p>Menús, catálogos, presentaciones y piezas gráficas con criterio y atención al detalle.</p>
@@ -336,7 +437,7 @@
     </section>
 
     <section class="portfolio" id="portfolio">
-        <div class="portfolio-header">
+        <div class="portfolio-header" data-speed="0.94">
             <span class="label">Trabajo seleccionado</span>
             <h2>Proyectos</h2>
         </div>
@@ -386,33 +487,131 @@
     const isDesktop = window.matchMedia('(pointer: fine)').matches;
 
     /* ══════════════════════════════════════
-       DOCK EFFECT — nav con gap generoso
+       HAMBURGER MENU — SVG WAVE
     ══════════════════════════════════════ */
-    if (isDesktop) {
-    const navLinks  = document.querySelectorAll('.nav-link');
-    const BASE_SIZE = 14;
-    const MAX_SIZE  = 20;
-    const SPREAD    = 100;
+    const hamburger   = document.getElementById('hamburger');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const paths       = document.querySelectorAll('.shape-overlays__path');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    const mobileFooter = document.getElementById('mobile-footer');
 
-    document.addEventListener('mousemove', e => {
-        navLinks.forEach(link => {
-            const rect   = link.getBoundingClientRect();
-            const cx     = rect.left + rect.width / 2;
-            const cy     = rect.top  + rect.height / 2;
-            const dist   = Math.sqrt((e.clientX - cx) ** 2 + (e.clientY - cy) ** 2);
-            const factor = Math.exp(-(dist * dist) / (2 * SPREAD * SPREAD));
-            const size   = BASE_SIZE + (MAX_SIZE - BASE_SIZE) * factor;
-            const bright = factor > 0.15 ? '#f0f0f0' : '#888';
-            gsap.to(link, { fontSize: size + 'px', color: bright, duration: 0.2, ease: 'power2.out' });
+    const numPoints      = 8;
+    const numPaths       = paths.length;
+    const delayPointsMax = 0.25;
+    const delayPerPath   = 0.2;
+    let menuOpen = false;
+    let menuAnimating = false;
+
+    // Inicializar puntos de los paths
+    const allPoints = [];
+    for (let i = 0; i < numPaths; i++) {
+        const pts = [];
+        allPoints.push(pts);
+        for (let j = 0; j < numPoints; j++) pts.push(0 );
+    }
+
+    function renderPaths() {
+        for (let i = 0; i < numPaths; i++) {
+            const pts = allPoints[i];
+            let d = menuOpen
+                ? `M 0 0 V ${pts[0]} C`
+                : `M 0 ${pts[0]} C`;
+            for (let j = 0; j < numPoints - 1; j++) {
+                const p  = (j + 1) / (numPoints - 1) * 100;
+                const cp = p - (1 / (numPoints - 1) * 100) / 2;
+                d += ` ${cp} ${pts[j]} ${cp} ${pts[j+1]} ${p} ${pts[j+1]}`;
+            }
+            d += menuOpen ? ` V 100 H 0` : ` V 0 H 0`;
+            paths[i].setAttribute('d', d);
+        }
+    }
+
+    function toggleMenu() {
+        if (menuAnimating) return;
+        menuAnimating = true;
+        menuOpen = !menuOpen;
+        hamburger.classList.toggle('open', menuOpen);
+        menuOverlay.classList.toggle('active', menuOpen);
+
+        // Calcular delays aleatorios por punto
+        const pointsDelay = Array.from({ length: numPoints }, () => Math.random() * delayPointsMax);
+
+        const tl = gsap.timeline({
+            onUpdate: renderPaths,
+            onComplete: () => { menuAnimating = false; }
+        });
+
+        // Reset puntos al estado inicial
+        for (let i = 0; i < numPaths; i++) {
+            for (let j = 0; j < numPoints; j++) {
+                allPoints[i][j] = menuOpen ? 100 : 0;
+            }
+        }
+
+        // Animar cada punto de cada path
+        for (let i = 0; i < numPaths; i++) {
+            const pts = allPoints[i];
+            const pathDelay = delayPerPath * (menuOpen ? i : (numPaths - i - 1));
+            for (let j = 0; j < numPoints; j++) {
+                tl.to(pts, {
+                    [j]: 0,
+                    duration: 0.85,
+                    ease: 'power2.inOut'
+                }, pointsDelay[j] + pathDelay);
+            }
+        }
+
+        // Links del menú
+        if (menuOpen) {
+            tl.to(mobileLinks, {
+                opacity: 1, translateY: 0, duration: 0.5,
+                stagger: 0.08, ease: 'power3.out'
+            }, 0.35);
+            tl.to(mobileFooter, { opacity: 1, duration: 0.4 }, 0.6);
+        } else {
+            gsap.to([...mobileLinks, mobileFooter], {
+                opacity: 0, translateY: 20, duration: 0.2
+            });
+        }
+    }
+    
+    renderPaths();
+
+    hamburger.addEventListener('click', toggleMenu);
+
+    // Cerrar al clickear un link del menú
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (menuOpen) toggleMenu();
         });
     });
 
-    document.getElementById('nav').addEventListener('mouseleave', () => {
-        navLinks.forEach(link =>
-            gsap.to(link, { fontSize: BASE_SIZE + 'px', color: '#888', duration: 0.5, ease: 'power3.out' })
-        );
-    });
-}
+    /* ══════════════════════════════════════
+       DOCK EFFECT — desktop
+    ══════════════════════════════════════ */
+    if (isDesktop) {
+        const navLinks  = document.querySelectorAll('.nav-link');
+        const MAX_SCALE = 1.3;
+        const SPREAD    = 90;
+
+        document.addEventListener('mousemove', e => {
+            navLinks.forEach(link => {
+                const rect   = link.getBoundingClientRect();
+                const cx     = rect.left + rect.width / 2;
+                const dist   = Math.abs(e.clientX - cx);
+                const factor = Math.max(0, 1 - dist / SPREAD);
+                const scale  = 1 + (MAX_SCALE - 1) * factor;
+                const bright = factor > 0.2 ? '#f0f0f0' : '#888';
+                gsap.to(link, { scale, color: bright, duration: 0.3, ease: 'power2.out' });
+            });
+        });
+
+        document.getElementById('nav').addEventListener('mouseleave', () => {
+            navLinks.forEach(link =>
+                gsap.to(link, { scale: 1, color: '#888', duration: 0.5, ease: 'power3.out' })
+            );
+        });
+    }
 
     /* ══════════════════════════════════════
        CURSOR
@@ -486,7 +685,24 @@
     });
 
     /* ══════════════════════════════════════
-       THREE.JS
+       DATA-SPEED PARALLAX
+    ══════════════════════════════════════ */
+    gsap.utils.toArray('[data-speed]').forEach(el => {
+        const speed = parseFloat(el.dataset.speed);
+        gsap.to(el, {
+            y: () => (1 - speed) * -80,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: el,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+    });
+
+    /* ══════════════════════════════════════
+       THREE.JS — LOGO ZONDA 3D
     ══════════════════════════════════════ */
     const canvas   = document.getElementById('three-canvas');
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
@@ -509,20 +725,16 @@
     const logoGroup = new THREE.Group();
     scene.add(logoGroup);
 
-    /* ── PARTÍCULAS (sparkles) ── */
+    /* Partículas sparkles */
     const PARTICLE_COUNT = 180;
     const positions  = new Float32Array(PARTICLE_COUNT * 3);
-    const velocities = [];  // velocidad de cada partícula
-    const lifetimes  = new Float32Array(PARTICLE_COUNT);   // 0-1 vida restante
+    const velocities = [];
+    const lifetimes  = new Float32Array(PARTICLE_COUNT);
     const sizes      = new Float32Array(PARTICLE_COUNT);
 
-    // Inicializar todas inactivas
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-        positions[i * 3]     = 0;
-        positions[i * 3 + 1] = 0;
-        positions[i * 3 + 2] = 0;
-        lifetimes[i] = 0;
-        sizes[i]     = 0;
+        positions[i*3] = positions[i*3+1] = positions[i*3+2] = 0;
+        lifetimes[i] = sizes[i] = 0;
         velocities.push({ x: 0, y: 0, z: 0 });
     }
 
@@ -530,36 +742,26 @@
     sparkleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     sparkleGeo.setAttribute('size',     new THREE.BufferAttribute(sizes, 1));
 
-    // Shader para las estrellas (punto con brillo circular)
     const sparkleMat = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 0.06,
-        sizeAttenuation: true,
-        transparent: true,
-        opacity: 0,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
+        color: 0xffffff, size: 0.06, sizeAttenuation: true,
+        transparent: true, opacity: 0,
+        blending: THREE.AdditiveBlending, depthWrite: false,
     });
+    scene.add(new THREE.Points(sparkleGeo, sparkleMat));
 
-    const sparkles = new THREE.Points(sparkleGeo, sparkleMat);
-    scene.add(sparkles);
-
-    let sparkleIntensity = 0;  // 0-1, controlado por GSAP
+    let sparkleIntensity = 0;
     let particleTimer = 0;
 
     function spawnParticle() {
-        // Buscar una partícula inactiva
         for (let i = 0; i < PARTICLE_COUNT; i++) {
             if (lifetimes[i] <= 0) {
-                // Spawn desde posición aleatoria alrededor del logo
-                const angle  = Math.random() * Math.PI * 2;
+                const angle = Math.random() * Math.PI * 2;
                 const radius = 0.5 + Math.random() * 1.5;
-                positions[i * 3]     = Math.cos(angle) * radius + logoGroup.position.x;
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 0.8 + logoGroup.position.y;
-                positions[i * 3 + 2] = Math.sin(angle) * radius * 0.3;
-                lifetimes[i] = 0.8 + Math.random() * 0.8;  // duración
+                positions[i*3]   = Math.cos(angle) * radius + logoGroup.position.x;
+                positions[i*3+1] = (Math.random() - 0.5) * 0.8 + logoGroup.position.y;
+                positions[i*3+2] = Math.sin(angle) * radius * 0.3;
+                lifetimes[i] = 0.8 + Math.random() * 0.8;
                 sizes[i]     = 0.04 + Math.random() * 0.08;
-                // Velocidad: hacia afuera y arriba
                 velocities[i] = {
                     x: (Math.random() - 0.5) * 0.015,
                     y: 0.008 + Math.random() * 0.012,
@@ -571,47 +773,37 @@
     }
 
     function updateParticles(dt) {
-        let anyAlive = false;
         for (let i = 0; i < PARTICLE_COUNT; i++) {
             if (lifetimes[i] > 0) {
                 lifetimes[i] -= dt * 0.8;
-                positions[i * 3]     += velocities[i].x;
-                positions[i * 3 + 1] += velocities[i].y;
-                positions[i * 3 + 2] += velocities[i].z;
+                positions[i*3]   += velocities[i].x;
+                positions[i*3+1] += velocities[i].y;
+                positions[i*3+2] += velocities[i].z;
                 sizes[i] *= 0.98;
                 if (lifetimes[i] < 0) lifetimes[i] = 0;
-                anyAlive = true;
             }
         }
         sparkleGeo.attributes.position.needsUpdate = true;
         sparkleGeo.attributes.size.needsUpdate     = true;
-
-        // Opacidad global de las partículas
         sparkleMat.opacity = sparkleIntensity * 0.9;
     }
 
-    /* ── FONT LOAD + TIMELINE SCROLL ── */
     const fontLoader = new THREE.FontLoader();
     fontLoader.load(
         'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/fonts/helvetiker_bold.typeface.json',
         font => {
             const textGeo = new THREE.TextGeometry('ZONDA', {
-                font, size: 0.75, height: 0.22,
-                curveSegments: 10, bevelEnabled: true,
-                bevelThickness: 0.025, bevelSize: 0.018, bevelSegments: 4
+                font, size: 0.75, height: 0.22, curveSegments: 10,
+                bevelEnabled: true, bevelThickness: 0.025,
+                bevelSize: 0.018, bevelSegments: 4
             });
             textGeo.computeBoundingBox();
             const cX = (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x) / 2;
             const cY = (textGeo.boundingBox.max.y - textGeo.boundingBox.min.y) / 2;
             textGeo.translate(-cX, -cY, 0);
 
-            const matSolid = new THREE.MeshStandardMaterial({
-                color: 0x0d0d0d, metalness: 1.0, roughness: 0.04
-            });
-            const matWire = new THREE.MeshBasicMaterial({
-                color: 0xffffff, wireframe: true,
-                opacity: 0, transparent: true
-            });
+            const matSolid = new THREE.MeshStandardMaterial({ color: 0x0d0d0d, metalness: 1.0, roughness: 0.04 });
+            const matWire  = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0, transparent: true });
 
             logoGroup.add(new THREE.Mesh(textGeo, matSolid));
             logoGroup.add(new THREE.Mesh(textGeo, matWire));
@@ -621,12 +813,9 @@
 
             const scrollTL = gsap.timeline({
                 scrollTrigger: {
-                    trigger: '#pin-section',
-                    pin: true,
-                    start: 'top top',
-                    end: '+=2800',
-                    scrub: 1.5,
-                    onUpdate: self => {
+                    trigger: '#pin-section', pin: true,
+                    start: 'top top', end: '+=2800', scrub: 1.5,
+                    onUpdate: () => {
                         const deg = Math.round(state.rotY * 180 / Math.PI) % 360;
                         document.getElementById('stat-rot').textContent =
                             Math.abs(deg).toString().padStart(3, '0') + '°';
@@ -635,55 +824,40 @@
             });
 
             scrollTL
-                /* 1 — Aparece */
                 .addLabel('aparece')
-                .to(state,       { sc: 1, duration: 1.5, ease: 'expo.out' }, 'aparece')
-                .to('#pin-label',{ opacity: 1, duration: 0.5 }, 'aparece+=0.6')
-                .to('#pin-title',{ opacity: 1, duration: 0.5 }, 'aparece+=0.9')
+                .to(state,        { sc: 1, duration: 1.5, ease: 'expo.out' }, 'aparece')
+                .to('#pin-label', { opacity: 1, duration: 0.5 }, 'aparece+=0.6')
+                .to('#pin-title', { opacity: 1, duration: 0.5 }, 'aparece+=0.9')
 
-                /* 2 — Gira + sparkles aparecen */
                 .addLabel('gira')
-                .to(state,       { rotY: Math.PI * 2, duration: 2.5, ease: 'none' }, 'gira')
-                .to(matWire,     { opacity: 0.25, duration: 1 }, 'gira')
-                .to({ v: 0 },    { v: 1, duration: 1,
-                    onUpdate: function() { sparkleIntensity = this.targets()[0].v; }
-                }, 'gira')
+                .to(state,     { rotY: Math.PI * 2, duration: 2.5, ease: 'none' }, 'gira')
+                .to(matWire,   { opacity: 0.25, duration: 1 }, 'gira')
+                .to({ v: 0 }, { v: 1, duration: 1, onUpdate: function() { sparkleIntensity = this.targets()[0].v; } }, 'gira')
 
-                /* 3 — Inclina + más giro + más brillo */
                 .addLabel('inclina')
-                .to(state,       { rotX: Math.PI * 0.35, duration: 1.5, ease: 'power2.inOut' }, 'inclina')
-                .to(state,       { rotY: Math.PI * 4,    duration: 2.2, ease: 'none' }, 'inclina')
-                .to(light1,      { intensity: 7, duration: 1 }, 'inclina')
+                .to(state,   { rotX: Math.PI * 0.35, duration: 1.5, ease: 'power2.inOut' }, 'inclina')
+                .to(state,   { rotY: Math.PI * 4,    duration: 2.2, ease: 'none' }, 'inclina')
+                .to(light1,  { intensity: 7, duration: 1 }, 'inclina')
 
-                /* 4 — Flash + salida */
                 .addLabel('salida')
-                // sparkles se apagan
-                .to({ v: 1 }, { v: 0, duration: 0.8,
-                    onUpdate: function() { sparkleIntensity = this.targets()[0].v; }
-                }, 'salida')
-                // Logo zoom out
-                .to(state,       { sc: 0.02, rotX: 0, duration: 1.2, ease: 'power4.in' }, 'salida+=0.2')
-                .to(matWire,     { opacity: 0, duration: 0.6 }, 'salida+=0.5')
-                .to('#pin-label',{ opacity: 0, duration: 0.4 }, 'salida')
-                .to('#pin-title',{ opacity: 0, duration: 0.4 }, 'salida+=0.1')
-                // ⚡ FLASH — rayo de luz
-                .to('#flash',    {
+                .to({ v: 1 }, { v: 0, duration: 0.8, onUpdate: function() { sparkleIntensity = this.targets()[0].v; } }, 'salida')
+                .to(state,        { sc: 0.02, rotX: 0, duration: 1.2, ease: 'power4.in' }, 'salida+=0.2')
+                .to(matWire,      { opacity: 0, duration: 0.6 }, 'salida+=0.5')
+                .to('#pin-label', { opacity: 0, duration: 0.4 }, 'salida')
+                .to('#pin-title', { opacity: 0, duration: 0.4 }, 'salida+=0.1')
+                .to('#flash', {
                     opacity: 1, duration: 0.06, ease: 'none',
                     onComplete: () => {
-                        // Segundo flash más suave
                         gsap.to('#flash', { opacity: 0, duration: 0.18, ease: 'power2.out',
                             onComplete: () => {
                                 gsap.to('#flash', { opacity: 0.4, duration: 0.05, ease: 'none',
-                                    onComplete: () => {
-                                        gsap.to('#flash', { opacity: 0, duration: 0.4, ease: 'power3.out' });
-                                    }
+                                    onComplete: () => gsap.to('#flash', { opacity: 0, duration: 0.4, ease: 'power3.out' })
                                 });
                             }
                         });
                     }
                 }, 'salida+=1.1');
 
-            /* Aplica state al grupo en cada tick */
             gsap.ticker.add(() => {
                 logoGroup.rotation.y = state.rotY;
                 logoGroup.rotation.x = state.rotX;
@@ -704,26 +878,21 @@
         const now = performance.now();
         const dt  = (now - lastTime) / 1000;
         lastTime  = now;
-
-        // Flotación
         logoGroup.position.y = Math.sin(now * 0.0008) * 0.04;
-
-        // Spawn partículas si hay intensidad
         if (sparkleIntensity > 0.05) {
             particleTimer += dt;
-            const spawnRate = sparkleIntensity * 25; // partículas/seg
+            const spawnRate = sparkleIntensity * 25;
             while (particleTimer > 1 / spawnRate) {
                 spawnParticle();
                 particleTimer -= 1 / spawnRate;
             }
         }
         updateParticles(dt);
-
         renderer.render(scene, camera);
     })();
 
     /* ══════════════════════════════════════
-       SCROLL ANIMATIONS — resto
+       SCROLL ANIMATIONS
     ══════════════════════════════════════ */
     gsap.from('.servicios-header', {
         opacity: 0, y: 50, duration: 0.9,
