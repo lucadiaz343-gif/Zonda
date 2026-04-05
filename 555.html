@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>555 Café y Quilombo — Zonda</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #0a0a0a; color: #f0f0f0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        nav { position: fixed; top: 0; width: 100%; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; z-index: 100; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); }
+        .logo { font-size: 18px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; color: #f0f0f0; }
+        .volver { color: #888; text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .volver:hover { color: #f0f0f0; }
+        .hero-proyecto { padding: 140px 48px 80px; border-bottom: 1px solid #222; }
+        .proyecto-label { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #888; }
+        .proyecto-titulo { font-size: clamp(48px, 7vw, 100px); font-weight: 700; letter-spacing: -2px; line-height: 1; margin-top: 16px; }
+        .proyecto-meta { display: flex; gap: 48px; margin-top: 32px; }
+        .meta-item { display: flex; flex-direction: column; gap: 4px; }
+        .meta-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #444; }
+        .meta-valor { font-size: 14px; color: #888; }
+        .imagenes { display: flex; flex-direction: column; }
+        .imagenes img { width: 100%; display: block; }
+        .cierre { padding: 120px 48px; border-top: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+        .cierre-texto { font-size: clamp(24px, 4vw, 48px); font-weight: 700; letter-spacing: -1px; }
+        .btn-volver { padding: 16px 36px; border: 1px solid #f0f0f0; color: #f0f0f0; text-decoration: none; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s; }
+        .btn-volver:hover { background: #f0f0f0; color: #0a0a0a; }
+        @media (max-width: 768px) {
+            nav { padding: 20px 24px; }
+            .hero-proyecto { padding: 100px 24px 60px; }
+            .proyecto-titulo { letter-spacing: -1px; }
+            .proyecto-meta {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+                margin-top: 24px;
+            }
+            .cierre {
+                flex-direction: column;
+                gap: 32px;
+                padding: 80px 24px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">ZONDA</a>
+        <a href="index.html" class="volver">← Volver al portfolio</a>
+    </nav>
+
+    <div class="hero-proyecto">
+        <span class="proyecto-label">Brand Identity</span>
+        <h1 class="proyecto-titulo">555 Café y Quilombo</h1>
+        <div class="proyecto-meta">
+            <div class="meta-item">
+                <span class="meta-label">Instagram</span>
+                <a href="https://www.instagram.com/555____cafe/" target="_blank" class="meta-valor" style="color:#888; text-decoration:none; transition: color 0.3s;" onmouseover="this.style.color='#f0f0f0'" onmouseout="this.style.color='#888'">@555____cafe</a>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Cliente</span>
+                <span class="meta-valor">555 Café y Quilombo</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Servicio</span>
+                <span class="meta-valor">Brand Identity</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Ubicación</span>
+                <span class="meta-valor">Mendoza, Argentina</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Año</span>
+                <span class="meta-valor">2026</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="imagenes">
+        <img src="555/1.jpg" alt="555 Café y Quilombo 01">
+        <img src="555/2.jpg" alt="555 Café y Quilombo 02">
+        <img src="555/3.jpg" alt="555 Café y Quilombo 03">
+        <img src="555/4.jpg" alt="555 Café y Quilombo 04">
+        <img src="555/5.jpg" alt="555 Café y Quilombo 05">
+        <img src="555/6.jpg" alt="555 Café y Quilombo 06">
+        <img src="555/7.jpg" alt="555 Café y Quilombo 07">
+        <img src="555/8.jpg" alt="555 Café y Quilombo 08">
+        <img src="555/9.jpg" alt="555 Café y Quilombo 09">
+        <img src="555/10.jpg" alt="555 Café y Quilombo 10">
+        <img src="555/11.jpg" alt="555 Café y Quilombo 11">
+        <img src="555/12.jpg" alt="555 Café y Quilombo 12">
+        <img src="555/13.jpg" alt="555 Café y Quilombo 13">
+        <img src="555/14.jpg" alt="555 Café y Quilombo 14">
+        <img src="555/15.jpg" alt="555 Café y Quilombo 15">
+    </div>
+
+    <div class="cierre">
+        <span class="cierre-texto">Siguiente proyecto →</span>
+        <a href="index.html" class="btn-volver">Ver todo el trabajo</a>
+    </div>
+
+</body>
+</html>
